@@ -1,0 +1,7 @@
+data class Menu(
+    val name: String,
+    val price: String,
+    val imgURL: String,
+    val category: String,
+    val store: String
+)
