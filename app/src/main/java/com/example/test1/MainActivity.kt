@@ -29,7 +29,6 @@ class MainActivity : Activity() {
         val searchView = findViewById<SearchView>(R.id.Search)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-//        recyclerView.adapter = CategoryAdapter(categories)
         adapter = CategoryAdapter(categories) { category ->
             val intent = Intent(this, GalleryActivity::class.java).apply {
                 putExtra(EXTRA_CATEGORY, category)

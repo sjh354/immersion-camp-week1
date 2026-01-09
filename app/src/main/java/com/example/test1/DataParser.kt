@@ -5,14 +5,18 @@ import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class Menu(
     val name: String,
     val price: String,
     val imgURL: String,
     val category: String,
     val store: String
-)
+):Parcelable
 
 class DataParser {
 

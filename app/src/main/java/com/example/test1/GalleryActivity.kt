@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +26,8 @@ class GalleryActivity : Activity() {
         setContentView(R.layout.gallery)
         val category = intent.getStringExtra(EXTRA_CATEGORY) ?: return
 
-        val TitleView = findViewById<TextView>(R.id.TitleOnGallery)
-        TitleView.text = category
+        val titleView = findViewById<TextView>(R.id.TitleOnGallery)
+        titleView.text = category
 
         val inputStream = assets.open("test.json")
         val dp = DataParser()
@@ -35,16 +36,23 @@ class GalleryActivity : Activity() {
         val recyclerView = findViewById<RecyclerView>(R.id.GalleryList)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
 
+//        adapter = MenuAdapter(filtered) { menu ->
+//            Log.d(menu, "HELLO")
+//        }
+
         adapter = MenuAdapter(filtered) { menu ->
-            Log.d(menu, "HELLO")
+            intent = Intent(this, InfoActivity::class.java)
+            intent.putExtra(InfoActivity.EXTRA_MENU, menu)
+            startActivity(intent)
         }
+
         recyclerView.adapter = adapter
     }
 }
 
 class MenuAdapter(
     private val menus: List<Menu>,
-    private val onItemClick: (String) -> Unit
+    private val onItemClick: (Menu) -> Unit
 ) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
     class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val iv = itemView.findViewById<ImageView>(R.id.ivPhoto)
@@ -54,6 +62,7 @@ class MenuAdapter(
                 .load(item.imgURL)
                 .centerCrop()
                 .into(iv)
+
         }
     }
 
@@ -66,6 +75,9 @@ class MenuAdapter(
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         holder.bind(menus[position])
+        holder.itemView.setOnClickListener {
+            onItemClick(menus[position])
+        }
     }
 
     override fun getItemCount() = menus.size
