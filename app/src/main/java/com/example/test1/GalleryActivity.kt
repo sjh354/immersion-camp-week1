@@ -1,75 +1,75 @@
 package com.example.test1
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class GalleryActivity : AppCompatActivity() {
+import android.app.Activity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+
+import com.bumptech.glide.Glide
+
+class GalleryActivity : Activity() {
 
     companion object {
         const val EXTRA_CATEGORY = "extra_category"
     }
-
+    private lateinit var adapter: MenuAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery)
-
         val category = intent.getStringExtra(EXTRA_CATEGORY) ?: return
+//        Log.d("1",category)
 
         val inputStream = assets.open("test.json")
         val dp = DataParser()
         val filtered = dp.parseMenusInSpecificCategory(inputStream, category)
 
-        val rv = findViewById<RecyclerView>(R.id.GalleryList)
-        rv.layoutManager = GridLayoutManager(this, 2)
-        // rv.adapter = MenuAdapter(filtered) { }
+        filtered.forEach {
+            println(it::class)   // 또는 it.img
+        }
+
+        val recyclerView = findViewById<RecyclerView>(R.id.GalleryList)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+
+        adapter = MenuAdapter(filtered) { menu ->
+            Log.d(menu, "HELLO")
+        }
+        recyclerView.adapter = adapter
     }
 }
-
-/*
 
 class MenuAdapter(
     private val menus: List<Menu>,
     private val onItemClick: (String) -> Unit
-) : RecyclerView.Adapter<MenuAdapter.MenuAdapter>() {
+) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+    class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val iv = itemView.findViewById<ImageView>(R.id.ivPhoto)
 
-    // 🔹 This list changes when searching
-    private var filteredCategories: List<String> = originalCategories
-
-    class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.findViewById(android.R.id.text1)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(android.R.layout.simple_list_item_1, parent, false)
-        return CategoryViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        val category = filteredCategories[position]
-        holder.textView.text = category
-
-        holder.itemView.setOnClickListener {
-            onItemClick(category)
+        fun bind(item: Menu) {
+            Glide.with(itemView)
+                .load(item.imgURL)
+                .centerCrop()
+                .into(iv)
         }
     }
 
-    override fun getItemCount() = filteredCategories.size
-
-    // 🔍 SEARCH FUNCTION
-    fun filter(query: String?) {
-        filteredCategories =
-            if (query.isNullOrBlank()) {
-                originalCategories
-            } else {
-                originalCategories.filter {
-                    it.contains(query, ignoreCase = true)
-                }
-            }
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
+        val v = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_image, parent, false)
+        return MenuViewHolder(v)
     }
+
+
+    override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
+        holder.bind(menus[position])
+    }
+
+    override fun getItemCount() = menus.size
+
 }
- */
 

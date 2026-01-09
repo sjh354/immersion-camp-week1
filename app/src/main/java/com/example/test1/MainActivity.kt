@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+import com.example.test1.GalleryActivity.Companion.EXTRA_CATEGORY
+
 class MainActivity : Activity() {
     private lateinit var adapter: CategoryAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +32,7 @@ class MainActivity : Activity() {
 //        recyclerView.adapter = CategoryAdapter(categories)
         adapter = CategoryAdapter(categories) { category ->
             val intent = Intent(this, GalleryActivity::class.java).apply {
-                putExtra("SelectedMenu", category)
+                putExtra(EXTRA_CATEGORY, category)
                 startActivity(this)
             }
         }
