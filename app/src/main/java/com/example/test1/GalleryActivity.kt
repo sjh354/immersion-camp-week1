@@ -1,23 +1,18 @@
 package com.example.test1
 
-import android.app.Activity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.test1.MenuAdapter
 
-class GalleryActivity : Activity() {
+class GalleryActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_CATEGORY = "extra_category"
     }
 
-    fun onSelectMenu() {
-//        super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery)
 
         val category = intent.getStringExtra(EXTRA_CATEGORY) ?: return
@@ -27,10 +22,12 @@ class GalleryActivity : Activity() {
         val filtered = dp.parseMenusInSpecificCategory(inputStream, category)
 
         val rv = findViewById<RecyclerView>(R.id.GalleryList)
-        rv.layoutManager = GridLayoutManager(this, 2) // 2열 갤러리
-        rv.adapter = MenuAdapter(filtered){}
+        rv.layoutManager = GridLayoutManager(this, 2)
+        // rv.adapter = MenuAdapter(filtered) { }
     }
 }
+
+/*
 
 class MenuAdapter(
     private val menus: List<Menu>,
@@ -74,4 +71,5 @@ class MenuAdapter(
         notifyDataSetChanged()
     }
 }
+ */
 

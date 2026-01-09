@@ -3,20 +3,18 @@ package com.example.test1
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.TextView
-import androidx.appcompat.widget.SearchView
-import kotlin.jvm.java
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : Activity() {
     private lateinit var adapter: CategoryAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search)
 
@@ -28,6 +26,17 @@ class MainActivity : Activity() {
         val recyclerView = findViewById<RecyclerView>(R.id.MenuList)
         val searchView = findViewById<SearchView>(R.id.Search)
 
+        recyclerView.layoutManager = LinearLayoutManager(this)
+//        recyclerView.adapter = CategoryAdapter(categories)
+        adapter = CategoryAdapter(categories) { category ->
+            val intent = Intent(this, GalleryActivity::class.java).apply {
+                putExtra("SelectedMenu", category)
+                startActivity(this)
+            }
+        }
+
+        recyclerView.adapter = adapter
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
 
@@ -36,16 +45,6 @@ class MainActivity : Activity() {
                 return true
             }
         })
-
-
-        recyclerView.layoutManager = LinearLayoutManager(this)
-//        recyclerView.adapter = CategoryAdapter(categories)
-        recyclerView.adapter = CategoryAdapter(categories) { category ->
-            val intent = Intent(this, GalleryActivity::class.java).apply {
-                putExtra(GalleryActivity.EXTRA_CATEGORY, category)
-            }
-            startActivity(intent)
-        }
 
     }
 }
