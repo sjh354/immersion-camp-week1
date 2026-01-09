@@ -11,10 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import kotlin.jvm.java
 
 class MainActivity : Activity() {
-
+    private lateinit var adapter: CategoryAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search)
@@ -25,6 +26,18 @@ class MainActivity : Activity() {
         val categories = dp.parseCategories(inputStream)
 
         val recyclerView = findViewById<RecyclerView>(R.id.MenuList)
+        val searchView = findViewById<SearchView>(R.id.Search)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter(newText)
+                return true
+            }
+        })
+
+
         recyclerView.layoutManager = LinearLayoutManager(this)
 //        recyclerView.adapter = CategoryAdapter(categories)
         recyclerView.adapter = CategoryAdapter(categories) { category ->
