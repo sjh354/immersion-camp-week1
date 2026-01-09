@@ -1,31 +1,39 @@
-package com.example.test1;
+package com.example.test1
 
-import org.json.JSONObject
+import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 
-public class DataParser {
+class DataParser {
 
-    public fun getJson(inputStream: InputStream): JSONObject? {
+    fun parseCategories(inputStream: InputStream): List<String> {
+        val categorySet = mutableSetOf<String>()
+
         try {
-
-
             val reader = BufferedReader(InputStreamReader(inputStream))
+            val buffer = StringBuilder()
+            var line: String?
 
-            var line = reader.readLine()
-            val buffer = StringBuffer();
-            while (line != null) {
-                buffer.append(line + "\n")
-                line = reader.readLine()
+            while (reader.readLine().also { line = it } != null) {
+                buffer.append(line)
             }
             reader.close()
 
-            val jsonObj = JSONObject(buffer.toString());
+            val jsonArray = JSONArray(buffer.toString())
 
-            return jsonObj;
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+
+                if (obj.has("category")) {
+                    categorySet.add(obj.getString("category"))
+                }
+            }
+
         } catch (e: Exception) {
-            return null
+            e.printStackTrace()
         }
+
+        return categorySet.toList()
     }
 }
