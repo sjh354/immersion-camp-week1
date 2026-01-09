@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/TitleOnGallery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
@@ -19,7 +19,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/GalleryList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_margin="10dp" />
 
         <Button
             android:id="@+id/BackToSearch"

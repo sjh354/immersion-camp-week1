@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 
 import com.bumptech.glide.Glide
 
@@ -23,15 +24,13 @@ class GalleryActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery)
         val category = intent.getStringExtra(EXTRA_CATEGORY) ?: return
-//        Log.d("1",category)
+
+        val TitleView = findViewById<TextView>(R.id.TitleOnGallery)
+        TitleView.text = category
 
         val inputStream = assets.open("test.json")
         val dp = DataParser()
         val filtered = dp.parseMenusInSpecificCategory(inputStream, category)
-
-        filtered.forEach {
-            println(it::class)   // 또는 it.img
-        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.GalleryList)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
