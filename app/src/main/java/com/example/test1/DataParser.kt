@@ -1,5 +1,6 @@
 package com.example.test1
 
+import android.util.Log
 import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStream
@@ -46,7 +47,7 @@ class DataParser {
     }
 
     fun parseMenusInSpecificCategory(inputStream: InputStream, category: String): List<Menu>{
-        val ret = mutableSetOf<Menu>()
+        val ret = mutableListOf<Menu>()
 
         try {
             val reader = BufferedReader(InputStreamReader(inputStream))
@@ -64,11 +65,11 @@ class DataParser {
                 val obj = jsonArray.getJSONObject(i)
 
                 if (obj.has("category")) {
-                    if (obj["category"] == category) {
+                    if (obj.getString("category") == category) {
                         ret.add(Menu(
                             name = obj.getString("name"),
                             price = obj.getString("price"),
-                            imgURL = obj.getString("imgURL"),
+                            imgURL = obj.getString("img"),
                             category = obj.getString("category"),
                             store = obj.getString("store"),
                         ))
