@@ -36,4 +36,8 @@ class DataParser {
 
         return categorySet.toList()
     }
+
+    fun parseMenusInSpecificCategory(inputStream: InputStream, category: ): List<String>{
+        allMenus.filter { it.category == category }
+    }
 }

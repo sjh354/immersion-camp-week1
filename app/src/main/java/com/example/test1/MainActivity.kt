@@ -2,6 +2,7 @@ package com.example.test1
 
 import android.app.Activity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -18,6 +19,13 @@ class MainActivity : Activity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.MenuList)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = CategoryAdapter(categories)
+//        recyclerView.adapter = CategoryAdapter(categories)
+        recyclerView.adapter = CategoryAdapter(categories) { category ->
+            val intent = Intent(this, GalleryActivity::class.java).apply {
+                putExtra(GalleryActivity.EXTRA_CATEGORY, category)
+            }
+            startActivity(intent)
+        }
+
     }
 }

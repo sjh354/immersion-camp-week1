@@ -7,7 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CategoryAdapter(
-    private val categories: List<String>
+    private val categories: List<String>,
+    private val onItemClick: (String) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -22,6 +23,10 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.textView.text = categories[position]
+
+        holder.itemView.setOnClickListener {
+            onItemClick(categories[position])
+        }
     }
 
     override fun getItemCount() = categories.size
