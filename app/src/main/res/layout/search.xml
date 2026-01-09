@@ -11,10 +11,8 @@
     <SearchView
         android:id="@+id/Search"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_weight="0">
-
-    </SearchView>
+        android:layout_height="wrap_content"
+        android:layout_weight="0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MenuList"
@@ -22,6 +20,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0"
         android:contextClickable="true"
+        android:scrollbarStyle="outsideOverlay"
         tools:itemCount="2">
 
     </androidx.recyclerview.widget.RecyclerView>

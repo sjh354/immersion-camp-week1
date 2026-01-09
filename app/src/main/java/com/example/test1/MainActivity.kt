@@ -1,10 +1,17 @@
 package com.example.test1
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import kotlin.jvm.java
 
 class MainActivity : Activity() {
 
@@ -29,3 +36,47 @@ class MainActivity : Activity() {
 
     }
 }
+
+class CategoryAdapter(
+    private val originalCategories: List<String>,
+    private val onItemClick: (String) -> Unit
+) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+
+    // 🔹 This list changes when searching
+    private var filteredCategories: List<String> = originalCategories
+
+    class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textView: TextView = view.findViewById(android.R.id.text1)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(android.R.layout.simple_list_item_1, parent, false)
+        return CategoryViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+        val category = filteredCategories[position]
+        holder.textView.text = category
+
+        holder.itemView.setOnClickListener {
+            onItemClick(category)
+        }
+    }
+
+    override fun getItemCount() = filteredCategories.size
+
+    // 🔍 SEARCH FUNCTION
+    fun filter(query: String?) {
+        filteredCategories =
+            if (query.isNullOrBlank()) {
+                originalCategories
+            } else {
+                originalCategories.filter {
+                    it.contains(query, ignoreCase = true)
+                }
+            }
+        notifyDataSetChanged()
+    }
+}
+
