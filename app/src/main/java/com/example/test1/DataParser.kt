@@ -5,6 +5,14 @@ import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 
+data class Menu(
+    val name: String,
+    val price: String,
+    val imgURL: String,
+    val category: String,
+    val store: String
+)
+
 class DataParser {
 
     fun parseCategories(inputStream: InputStream): List<String> {
@@ -37,7 +45,41 @@ class DataParser {
         return categorySet.toList()
     }
 
-    fun parseMenusInSpecificCategory(inputStream: InputStream, category: ): List<String>{
-        allMenus.filter { it.category == category }
+    fun parseMenusInSpecificCategory(inputStream: InputStream, category: String): List<Menu>{
+        val ret = mutableSetOf<Menu>()
+
+        try {
+            val reader = BufferedReader(InputStreamReader(inputStream))
+            val buffer = StringBuilder()
+            var line: String?
+
+            while (reader.readLine().also { line = it } != null) {
+                buffer.append(line)
+            }
+            reader.close()
+
+            val jsonArray = JSONArray(buffer.toString())
+
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+
+                if (obj.has("category")) {
+                    if (obj["category"] == category) {
+                        ret.add(Menu(
+                            name = obj.getString("name"),
+                            price = obj.getString("price"),
+                            imgURL = obj.getString("imgURL"),
+                            category = obj.getString("category"),
+                            store = obj.getString("store"),
+                        ))
+                    }
+                }
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return ret.toList()
     }
 }
