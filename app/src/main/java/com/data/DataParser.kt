@@ -1,6 +1,5 @@
-package com.example.test1
+package com.data
 
-import android.util.Log
 import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStream

@@ -1,7 +1,6 @@
-package com.example.test1
+package com.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -14,6 +13,9 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.bumptech.glide.Glide
+import com.data.DataParser
+import com.data.Menu
+import com.example.test1.R
 
 class GalleryActivity : Activity() {
 
@@ -42,7 +44,7 @@ class GalleryActivity : Activity() {
 
         adapter = MenuAdapter(filtered) { menu ->
             intent = Intent(this, InfoActivity::class.java)
-            intent.putExtra(InfoActivity.EXTRA_MENU, menu)
+            intent.putExtra(InfoActivity.Companion.EXTRA_MENU, menu)
             startActivity(intent)
         }
 
