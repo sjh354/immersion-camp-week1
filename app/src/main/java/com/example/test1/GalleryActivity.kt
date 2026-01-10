@@ -1,18 +1,15 @@
 package com.example.test1
 
-import android.os.Bundle
-import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class GalleryActivity : Activity() {
@@ -55,7 +52,9 @@ class MenuAdapter(
     private val onItemClick: (Menu) -> Unit
 ) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
     class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val iv = itemView.findViewById<ImageView>(R.id.ivPhoto)
+        private val iv = itemView.findViewById<ImageView>(R.id.ivPhoto);
+
+        private val tv = itemView.findViewById<TextView>(R.id.tvPrice)
 
         fun bind(item: Menu) {
             Glide.with(itemView)
@@ -63,6 +62,8 @@ class MenuAdapter(
                 .centerCrop()
                 .into(iv)
 
+            tv.text = item.price.toString()   // or "₩${item.price}"
+            tv.visibility = View.VISIBLE
         }
     }
 

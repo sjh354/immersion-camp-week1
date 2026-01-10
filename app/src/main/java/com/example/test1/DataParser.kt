@@ -1,12 +1,11 @@
 package com.example.test1
 
-import android.util.Log
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
@@ -15,7 +14,8 @@ data class Menu(
     val price: String,
     val imgURL: String,
     val category: String,
-    val store: String
+    val store: String,
+    val isFavorite: Boolean
 ):Parcelable
 
 class DataParser {
@@ -76,6 +76,7 @@ class DataParser {
                             imgURL = obj.getString("img"),
                             category = obj.getString("category"),
                             store = obj.getString("store"),
+                            isFavorite = obj.getBoolean("isFavorite"),
                         ))
                     }
                 }
