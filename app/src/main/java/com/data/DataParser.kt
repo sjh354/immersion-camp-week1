@@ -6,17 +6,7 @@ import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-
-
-@Parcelize
-data class Menu(
-    val name: String,
-    val price: String,
-    val imgURL: String,
-    val category: String,
-    val store: String,
-    val isFavorite: Boolean
-):Parcelable
+import com.data.remote.dto.Menu
 
 class DataParser {
 

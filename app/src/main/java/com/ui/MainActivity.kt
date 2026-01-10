@@ -12,14 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.ui.GalleryActivity.Companion.EXTRA_CATEGORY
-import retrofit2.http.GET
-import retrofit2.http.Path
 import com.data.DataParser
 import com.data.remote.dto.UserDto
 import com.data.repository.UserRepository
 import com.example.test1.R
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import com.data.remote.dto.CategoryListDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,21 +31,20 @@ class MainActivity : Activity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search)
-
-        repo.getUser(1).enqueue(object : Callback<UserDto> {
-            override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
-                if (response.isSuccessful) {
-                    val user = response.body()
-                    Log.d("API", "user=$user")
-                } else {
-                    Log.e("API", "server error: ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<UserDto>, t: Throwable) {
-                Log.e("API", "network error", t)
-            }
-        })
+//
+//        repo.getCategoreis().enqueue(object : Callback<CategoryListDto> {
+//            override fun onResponse(call: Call<CategoryListDto>, response: Response<CategoryListDto>) {
+//                if (response.isSuccessful) {
+//                    val user = response.body()
+//                    Log.d("API", "user=$user")
+//                } else {
+//                    Log.e("API", "server error: ${response.code()}")
+//                }
+//            }
+//            override fun onFailure(call: Call<UserDto>, t: Throwable) {
+//                Log.e("API", "network error", t)
+//            }
+//        })
 
         val inputStream = assets.open("test.json")
 

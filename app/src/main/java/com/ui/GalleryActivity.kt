@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.data.DataParser
-import com.data.Menu
+import com.data.remote.dto.Menu
 import com.example.test1.R
 
 class GalleryActivity : Activity() {

@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.data.Menu
+import com.data.remote.dto.Menu
 import com.example.test1.R
 import android.widget.Button
 
