@@ -25,11 +25,23 @@
                 android:textAllCaps="false"
                 android:textSize="24sp" />
 
-            <ImageView
-                android:id="@+id/imgOnInfo"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                tools:src="@tools:sample/avatars" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/SetFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    app:srcCompat="@android:drawable/btn_star" />
+
+                <ImageView
+                    android:id="@+id/imgOnInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    tools:src="@tools:sample/avatars" />
+            </FrameLayout>
 
             <TableLayout
                 android:id="@+id/Info"
@@ -51,7 +63,7 @@
 
                     <TextView
                         android:id="@+id/infoTitle_2"
-                        android:layout_width="130dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:text="asdf"
                         android:textAlignment="textEnd"
