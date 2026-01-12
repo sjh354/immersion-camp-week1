@@ -1,4 +1,4 @@
-package com.example.test1
+package com.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -6,17 +6,7 @@ import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-
-
-@Parcelize
-data class Menu(
-    val name: String,
-    val price: String,
-    val imgURL: String,
-    val category: String,
-    val store: String,
-    val isFavorite: Boolean
-):Parcelable
+import com.data.remote.dto.Menu
 
 class DataParser {
 
@@ -73,7 +63,7 @@ class DataParser {
                         ret.add(Menu(
                             name = obj.getString("name"),
                             price = obj.getString("price"),
-                            imgURL = obj.getString("img"),
+                            img = obj.getString("img"),
                             category = obj.getString("category"),
                             store = obj.getString("store"),
                             isFavorite = obj.getBoolean("isFavorite"),

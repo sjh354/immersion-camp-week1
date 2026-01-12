@@ -1,4 +1,4 @@
-package com.example.test1
+package com.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -11,25 +11,48 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import com.example.test1.GalleryActivity.Companion.EXTRA_CATEGORY
+import com.ui.GalleryActivity.Companion.EXTRA_CATEGORY
+import com.data.DataParser
+import com.data.repository.UserRepository
+import com.example.test1.R
+import android.util.Log
+import com.data.remote.dto.CategoryListDto
+import com.data.remote.dto.UserDto
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class MainActivity : Activity() {
     private lateinit var adapter: CategoryAdapter
+    private val repo = UserRepository()
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search)
 
-        val inputStream = assets.open("test.json")
+        repo.getCategoreis().enqueue(object : Callback<CategoryListDto> {
+            override fun onResponse(call: Call<CategoryListDto>, response: Response<CategoryListDto>) {
+                if (response.isSuccessful) {
+                    val resp = response.body()
+                    val categories = resp?.data ?: emptyList<String>()
+                    adapter.setData(categories)
 
-        val dp = DataParser()
-        val categories = dp.parseCategories(inputStream)
+                } else {
+                    Log.e("API", "server error: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<CategoryListDto>, t: Throwable) {
+                Log.e("API", "network error", t)
+            }
+        })
 
         val recyclerView = findViewById<RecyclerView>(R.id.MenuList)
         val searchView = findViewById<SearchView>(R.id.Search)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = CategoryAdapter(categories) { category ->
+        adapter = CategoryAdapter(emptyList<String>()) { category ->
             val intent = Intent(this, GalleryActivity::class.java).apply {
                 putExtra(EXTRA_CATEGORY, category)
                 startActivity(this)
@@ -57,6 +80,11 @@ class CategoryAdapter(
 
     // 🔹 This list changes when searching
     private var filteredCategories: List<String> = originalCategories
+
+    fun setData(newList: List<String>) {
+        filteredCategories = newList
+        notifyDataSetChanged()
+    }
 
     class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(android.R.id.text1)

@@ -1,20 +1,16 @@
-package com.example.test1
+package com.ui
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.test1.DataParser
-import com.example.test1.Menu
+import com.data.remote.dto.Menu
 import com.example.test1.R
 import android.widget.Button
 
@@ -37,7 +33,7 @@ class InfoActivity : Activity() {
 
         val imgView = findViewById<ImageView>(R.id.imgOnInfo)
         Glide.with(this)
-            .load(menu.imgURL)
+            .load(menu.img)
             .centerCrop()
             .into(imgView)
 
@@ -62,7 +58,7 @@ class InfoAdapter(
 
         fun bind(item: Menu) {
             Glide.with(itemView)
-                .load(item.imgURL)
+                .load(item.img)
                 .centerCrop()
                 .into(iv)
         }
