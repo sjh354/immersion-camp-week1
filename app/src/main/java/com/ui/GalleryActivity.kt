@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -80,8 +81,11 @@ class MenuAdapter(
 ) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
     private var filteredMenus: List<Menu> = menus
+    private var lastAnimatedPosition = -1
+
     fun setData(newMenus: List<Menu>) {
         filteredMenus = newMenus
+        lastAnimatedPosition = -1
         notifyDataSetChanged()
     }
 
@@ -110,8 +114,29 @@ class MenuAdapter(
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         holder.bind(filteredMenus[position])
+
+
+        val adapterPosition = holder.bindingAdapterPosition
+        if (adapterPosition == RecyclerView.NO_POSITION) return
+
+
+        if (adapterPosition > lastAnimatedPosition) {
+            val anim = AnimationUtils.loadAnimation(
+                holder.itemView.context,
+                if (adapterPosition % 2 == 0)
+                    R.anim.slide_fade_left
+                else
+                    R.anim.slide_fade_right
+            )
+            holder.itemView.startAnimation(anim)
+            lastAnimatedPosition = adapterPosition
+        }
+
         holder.itemView.setOnClickListener {
-            onItemClick(filteredMenus[position])
+            val pos = holder.bindingAdapterPosition
+            if (pos != RecyclerView.NO_POSITION) {
+                onItemClick(filteredMenus[pos])
+            }
         }
     }
 
