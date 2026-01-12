@@ -63,7 +63,7 @@ class DataParser {
                         ret.add(Menu(
                             name = obj.getString("name"),
                             price = obj.getString("price"),
-                            imgURL = obj.getString("img"),
+                            img = obj.getString("img"),
                             category = obj.getString("category"),
                             store = obj.getString("store"),
                             isFavorite = obj.getBoolean("isFavorite"),

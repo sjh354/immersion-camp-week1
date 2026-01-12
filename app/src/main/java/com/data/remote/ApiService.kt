@@ -2,7 +2,7 @@ package com.data.remote
 
 import com.data.remote.dto.UserDto
 import com.data.remote.dto.CategoryListDto
-import com.data.remote.dto.Menu
+import com.data.remote.dto.MenuListDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -27,6 +27,6 @@ interface ApiService {
     @GET("api/menus/{category}")
     fun getMenus(
         @Path("category") category: String
-    ): Call<List<Menu>>
+    ): Call<MenuListDto>
 
 }

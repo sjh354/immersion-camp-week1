@@ -33,7 +33,7 @@ class InfoActivity : Activity() {
 
         val imgView = findViewById<ImageView>(R.id.imgOnInfo)
         Glide.with(this)
-            .load(menu.imgURL)
+            .load(menu.img)
             .centerCrop()
             .into(imgView)
 
@@ -58,7 +58,7 @@ class InfoAdapter(
 
         fun bind(item: Menu) {
             Glide.with(itemView)
-                .load(item.imgURL)
+                .load(item.img)
                 .centerCrop()
                 .into(iv)
         }

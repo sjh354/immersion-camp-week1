@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class Menu(
     val name: String,
     val price: String,
-    val imgURL: String,
+    val img: String,
     val category: String,
     val store: String,
     val isFavorite: Boolean

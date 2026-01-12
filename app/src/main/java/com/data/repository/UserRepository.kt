@@ -2,7 +2,7 @@ package com.data.repository
 
 import com.data.remote.RetrofitClient
 import com.data.remote.dto.CategoryListDto
-import com.data.remote.dto.Menu
+import com.data.remote.dto.MenuListDto
 import com.data.remote.dto.UserDto
 import retrofit2.Call
 
@@ -20,7 +20,7 @@ class UserRepository {
         return RetrofitClient.api.getCategories()
     }
 
-    fun getMenus(category: String): Call<List<Menu>> {
+    fun getMenus(category: String): Call<MenuListDto> {
         return RetrofitClient.api.getMenus(category)
     }
 
