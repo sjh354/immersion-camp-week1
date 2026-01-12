@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -42,6 +43,7 @@ class InfoActivity : Activity() {
         findViewById<TextView>(R.id.TitleOnInfo).text = menu.store
         findViewById<TextView>(R.id.infoName_1).text = menu.name
         findViewById<TextView>(R.id.InfoTitle_1).text = menu.price
+        findViewById<RatingBar>(R.id.ratingBar).rating = menu.starpoint
 
         val imgView = findViewById<ImageView>(R.id.imgOnInfo)
         val imgBtn = findViewById<ImageView>(R.id.SetFavorite)
