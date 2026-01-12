@@ -57,19 +57,16 @@ class GalleryActivity : Activity() {
         titleView.text = category
 
         requestLocationPermission()
-        val curgps = getLocation()
-        val reqBody = requestMenuListBySortingDto(
-            sort="gps",
-            latitude = curgps.latitude,
-            longitude = curgps.longitude
-        )
 
-        repo.getMenusBySorting(category, reqBody).enqueue(object : Callback<MenuListDto> {
+        repo.getMenus(category).enqueue(object : Callback<MenuListDto> {
             override fun onResponse(call: Call<MenuListDto>, response: Response<MenuListDto>) {
                 if (response.isSuccessful) {
                     val resp = response.body()
+                    Log.d("API", "server response: ${resp}")
+
                     val menus = resp?.data ?: emptyList<Menu>()
                     adapter.setData(menus)
+
                 } else {
                     Log.e("API", "server error: ${response.code()}")
                 }
@@ -78,24 +75,6 @@ class GalleryActivity : Activity() {
                 Log.e("API", "network error", t)
             }
         })
-//        이건 걍 리스트 불러오는거
-//        repo.getMenus(category).enqueue(object : Callback<MenuListDto> {
-//            override fun onResponse(call: Call<MenuListDto>, response: Response<MenuListDto>) {
-//                if (response.isSuccessful) {
-//                    val resp = response.body()
-//                    Log.d("API", "server response: ${resp}")
-//
-//                    val menus = resp?.data ?: emptyList<Menu>()
-//                    adapter.setData(menus)
-//
-//                } else {
-//                    Log.e("API", "server error: ${response.code()}")
-//                }
-//            }
-//            override fun onFailure(call: Call<MenuListDto>, t: Throwable) {
-//                Log.e("API", "network error", t)
-//            }
-//        })
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.GalleryList)
@@ -114,14 +93,12 @@ class GalleryActivity : Activity() {
             startActivity(intent)
         }
 
-
         recyclerView.adapter = adapter
-
 
         val spinner = findViewById<Spinner>(R.id.Spinner)
         val button = findViewById<ImageButton>(R.id.SpinnerButton)
 
-        val items = listOf("All", "Price ↑", "Price ↓")
+        val items = listOf("가격 오름차순", "가격 내림차순", "거리 가까운순")
 
         val adapter = ArrayAdapter(
             this,
@@ -143,12 +120,44 @@ class GalleryActivity : Activity() {
                 id: Long
             ) {
                 // 이곳에 정렬 함수 실행
+                when (position) {
+                    0 -> callMenuListAPI(category, "price_asc")
+                    1 -> callMenuListAPI(category, "price_desc")
+                    2 -> callMenuListAPI(category, "gps")
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-
-
+    }
+    private fun callMenuListAPI(category: String, pivot: String) {
+        var reqBody = requestMenuListBySortingDto(
+            sort=pivot,
+            latitude = 0.0,
+            longitude = 0.0
+        )
+        if (pivot == "gps") {
+            val curgps = getLocation()
+            reqBody = requestMenuListBySortingDto(
+                sort="price_asc",
+                latitude = curgps.latitude,
+                longitude = curgps.longitude
+            )
+        }
+        repo.getMenusBySorting(category, reqBody).enqueue(object : Callback<MenuListDto> {
+            override fun onResponse(call: Call<MenuListDto>, response: Response<MenuListDto>) {
+                if (response.isSuccessful) {
+                    val resp = response.body()
+                    val menus = resp?.data ?: emptyList<Menu>()
+                    adapter.setData(menus)
+                } else {
+                    Log.e("API", "server error: ${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<MenuListDto>, t: Throwable) {
+                Log.e("API", "network error", t)
+            }
+        })
     }
     private fun requestLocationPermission() {
         if (ContextCompat.checkSelfPermission(
@@ -257,7 +266,6 @@ class MenuAdapter(
 
         val adapterPosition = holder.bindingAdapterPosition
         if (adapterPosition == RecyclerView.NO_POSITION) return
-
 
         if (adapterPosition > lastAnimatedPosition) {
             val anim = AnimationUtils.loadAnimation(
