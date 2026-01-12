@@ -120,6 +120,7 @@ class GalleryActivity : Activity() {
                 id: Long
             ) {
                 // 이곳에 정렬 함수 실행
+                Log.d("TESTESTESTESTESTSETESTSET", position.toString())
                 when (position) {
                     0 -> callMenuListAPI(category, "price_asc")
                     1 -> callMenuListAPI(category, "price_desc")
@@ -139,7 +140,7 @@ class GalleryActivity : Activity() {
         if (pivot == "gps") {
             val curgps = getLocation()
             reqBody = requestMenuListBySortingDto(
-                sort="price_asc",
+                sort="gps",
                 latitude = curgps.latitude,
                 longitude = curgps.longitude
             )
