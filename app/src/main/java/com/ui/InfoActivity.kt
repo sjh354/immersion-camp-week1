@@ -49,7 +49,7 @@ class InfoActivity : Activity() {
         }
 
         findViewById<Button>(R.id.button3).setOnClickListener {
-            val url = "https://yogiyo.onelink.me/BlI7/8rs3fvnu"
+            val url = menu.deeplink
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }

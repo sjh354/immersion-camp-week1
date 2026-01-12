@@ -1,7 +1,6 @@
 package com.data.remote.dto
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -11,5 +10,7 @@ data class Menu(
     val img: String,
     val category: String,
     val store: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    val starpoint: Float,
+    val deeplink: String
 ):Parcelable
