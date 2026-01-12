@@ -29,6 +29,9 @@
         <activity android:name="com.ui.GalleryActivity" />
         <activity android:name="com.ui.InfoActivity" />
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
 
     </application>

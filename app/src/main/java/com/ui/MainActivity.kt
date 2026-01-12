@@ -3,6 +3,7 @@ package com.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +11,10 @@ import android.widget.SearchView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-import com.ui.GalleryActivity.Companion.EXTRA_CATEGORY
-import com.data.DataParser
+import com.data.remote.dto.CategoryListDto
 import com.data.repository.UserRepository
 import com.example.test1.R
-import android.util.Log
-import com.data.remote.dto.CategoryListDto
-import com.data.remote.dto.UserDto
+import com.ui.GalleryActivity.Companion.EXTRA_CATEGORY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

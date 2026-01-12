@@ -4,24 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:background="#FFFFFF">
+    android:layout_gravity="bottom"
+    android:background="@mipmap/ic_launcher_background">
 
-    <SearchView
-        android:id="@+id/Search"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/MenuList"
-        android:layout_width="match_parent"
-        android:layout_height="362dp"
-        android:layout_gravity="bottom"
-        android:contextClickable="true"
-        android:scrollbarStyle="outsideOverlay"
-        tools:itemCount="2">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:lineSpacingExtra="8sp"
+            android:text="어디"
+            android:textAlignment="center"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:typeface="normal"
+            tools:text="어디" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="전국의 메뉴를 한 손에"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="normal"
+            tools:text="전국의 메뉴를 한 손에" />
+
+        <SearchView
+            android:id="@+id/Search"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:searchIcon="@drawable/search" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/MenuList"
+            android:layout_width="match_parent"
+            android:layout_height="362dp"
+            android:contextClickable="true"
+            android:padding="25dp"
+            android:scrollbarStyle="outsideOverlay"
+            tools:itemCount="2">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
 </FrameLayout>
