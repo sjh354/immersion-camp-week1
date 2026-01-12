@@ -71,14 +71,15 @@ class MainActivity : Activity() {
 }
 
 class CategoryAdapter(
-    private val originalCategories: List<String>,
+    onItemClick1: List<String>,
     private val onItemClick: (String) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    // 🔹 This list changes when searching
-    private var filteredCategories: List<String> = originalCategories
+    private var allCategories: List<String> = emptyList()
+    private var filteredCategories: List<String> = emptyList()
 
     fun setData(newList: List<String>) {
+        allCategories = newList
         filteredCategories = newList
         notifyDataSetChanged()
     }
@@ -96,25 +97,20 @@ class CategoryAdapter(
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = filteredCategories[position]
         holder.textView.text = category
-
-        holder.itemView.setOnClickListener {
-            onItemClick(category)
-        }
+        holder.itemView.setOnClickListener { onItemClick(category) }
     }
 
     override fun getItemCount() = filteredCategories.size
 
-    // 🔍 SEARCH FUNCTION
     fun filter(query: String?) {
         filteredCategories =
             if (query.isNullOrBlank()) {
-                originalCategories
+                allCategories
             } else {
-                originalCategories.filter {
+                allCategories.filter {
                     it.contains(query, ignoreCase = true)
                 }
             }
         notifyDataSetChanged()
     }
 }
-

@@ -14,18 +14,12 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:lineSpacingExtra="8sp"
-            android:text="어디"
-            android:textAlignment="center"
-            android:textSize="48sp"
-            android:textStyle="bold"
-            android:typeface="normal"
-            tools:text="어디" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="278dp"
+            android:layout_height="145dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/icon_text_cut" />
 
         <TextView
             android:id="@+id/textView2"
