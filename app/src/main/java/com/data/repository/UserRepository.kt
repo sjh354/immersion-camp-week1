@@ -4,8 +4,7 @@ import com.data.remote.RetrofitClient
 import com.data.remote.dto.CategoryListDto
 import com.data.remote.dto.MenuListDto
 import com.data.remote.dto.UserDto
-import com.data.remote.dto.requestMenuListByGpsDto
-import com.ui.gpsInfo
+import com.data.remote.dto.requestMenuListBySortingDto
 import retrofit2.Call
 
 class UserRepository {
@@ -26,8 +25,8 @@ class UserRepository {
         return RetrofitClient.api.getMenus(category)
     }
 
-    fun getMenusByGPS(category: String, gps: requestMenuListByGpsDto): Call<MenuListDto> {
-        return RetrofitClient.api.getMenusByGPS(category, gps)
+    fun getMenusBySorting(category: String, reqBody: requestMenuListBySortingDto): Call<MenuListDto> {
+        return RetrofitClient.api.getMenusBySorting(category, reqBody)
     }
 
 }

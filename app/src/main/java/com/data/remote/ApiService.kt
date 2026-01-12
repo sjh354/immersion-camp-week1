@@ -3,7 +3,7 @@ package com.data.remote
 import com.data.remote.dto.UserDto
 import com.data.remote.dto.CategoryListDto
 import com.data.remote.dto.MenuListDto
-import com.data.remote.dto.requestMenuListByGpsDto
+import com.data.remote.dto.requestMenuListBySortingDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -33,8 +33,8 @@ interface ApiService {
     ): Call<MenuListDto>
 
     @POST("api/menus/{category}")
-    fun getMenusByGPS(
+    fun getMenusBySorting(
         @Path("category") category: String,
-        @Body body: requestMenuListByGpsDto
+        @Body body: requestMenuListBySortingDto
     ): Call<MenuListDto>
 }

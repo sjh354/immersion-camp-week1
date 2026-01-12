@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.data.remote.dto.Menu
 import com.data.remote.dto.MenuListDto
-import com.data.remote.dto.requestMenuListByGpsDto
+import com.data.remote.dto.requestMenuListBySortingDto
 import com.data.repository.UserRepository
 import com.example.test1.R
 import retrofit2.Call
@@ -54,13 +54,13 @@ class GalleryActivity : Activity() {
 
         requestLocationPermission()
         val curgps = getLocation()
-        val reqBody = requestMenuListByGpsDto(
+        val reqBody = requestMenuListBySortingDto(
             sort="gps",
             latitude = curgps.latitude,
             longitude = curgps.longitude
         )
 
-        repo.getMenusByGPS(category, reqBody).enqueue(object : Callback<MenuListDto> {
+        repo.getMenusBySorting(category, reqBody).enqueue(object : Callback<MenuListDto> {
             override fun onResponse(call: Call<MenuListDto>, response: Response<MenuListDto>) {
                 if (response.isSuccessful) {
                     val resp = response.body()
