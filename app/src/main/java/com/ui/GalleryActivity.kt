@@ -18,6 +18,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -251,6 +252,7 @@ class MenuAdapter(
     class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val iv = itemView.findViewById<ImageView>(R.id.ivPhoto);
         private val screen = itemView.findViewById<FrameLayout>(R.id.screen)
+        private val rating = itemView.findViewById<RatingBar>(R.id.rating)
         private val tv = itemView.findViewById<TextView>(R.id.tvPrice)
 
         fun bind(item: Menu) {
@@ -261,6 +263,7 @@ class MenuAdapter(
 
             tv.text = item.price.toString()   // or "₩${item.price}"
             tv.visibility = View.VISIBLE
+            rating.rating = item.starpoint
             if(item.isFavorite) {
                 screen.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.color_1))
             }
