@@ -108,6 +108,7 @@ class MenuAdapter(
 
     override fun onViewDetachedFromWindow(holder: MenuViewHolder) {
         super.onViewDetachedFromWindow(holder)
+        // 숨겨진 주석
         holder.itemView.clearAnimation()
     }
 
