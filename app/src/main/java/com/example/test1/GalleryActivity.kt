@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -51,10 +52,13 @@ class MenuAdapter(
     private val menus: List<Menu>,
     private val onItemClick: (Menu) -> Unit
 ) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
-    class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val iv = itemView.findViewById<ImageView>(R.id.ivPhoto);
 
-        private val tv = itemView.findViewById<TextView>(R.id.tvPrice)
+    private var lastAnimatedPosition = -1
+
+    // ✅ ViewHolder must extend RecyclerView.ViewHolder
+    class MenuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val iv: ImageView = itemView.findViewById(R.id.ivPhoto)
+        private val tv: TextView = itemView.findViewById(R.id.tvPrice)
 
         fun bind(item: Menu) {
             Glide.with(itemView)
@@ -62,26 +66,51 @@ class MenuAdapter(
                 .centerCrop()
                 .into(iv)
 
-            tv.text = item.price.toString()   // or "₩${item.price}"
-            tv.visibility = View.VISIBLE
+            tv.text = item.price.toString()
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
-        val v = LayoutInflater.from(parent.context)
+    // ✅ Return MenuViewHolder (not RecyclerView.ViewHolder)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MenuViewHolder {
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_image, parent, false)
-        return MenuViewHolder(v)
+        return MenuViewHolder(view)
     }
-
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         holder.bind(menus[position])
+
+        val adapterPosition = holder.bindingAdapterPosition
+        if (adapterPosition == RecyclerView.NO_POSITION) return
+
+        if (adapterPosition > lastAnimatedPosition) {
+            val animation = AnimationUtils.loadAnimation(
+                holder.itemView.context,
+                if (adapterPosition % 2 == 0)
+                    R.anim.slide_fade_left
+                else
+                    R.anim.slide_fade_right
+            )
+            holder.itemView.startAnimation(animation)
+            lastAnimatedPosition = adapterPosition
+        }
+
         holder.itemView.setOnClickListener {
-            onItemClick(menus[position])
+            val pos = holder.bindingAdapterPosition
+            if (pos != RecyclerView.NO_POSITION) {
+                onItemClick(menus[pos])
+            }
         }
     }
 
-    override fun getItemCount() = menus.size
+    override fun onViewDetachedFromWindow(holder: MenuViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.itemView.clearAnimation()
+    }
 
+    override fun getItemCount(): Int = menus.size
 }
 
