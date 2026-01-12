@@ -11,7 +11,7 @@
         android:id="@+id/BackToSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
+        android:layout_gravity="left"
         tools:text="SEARCH" />
 
     <ScrollView
@@ -26,7 +26,8 @@
             <TextView
                 android:id="@+id/TitleOnGallery"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textAllCaps="false"

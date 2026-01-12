@@ -1,7 +1,11 @@
 package com.ui
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,21 +14,30 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.data.remote.dto.Menu
 import com.data.remote.dto.MenuListDto
+import com.data.remote.dto.requestMenuListByGpsDto
 import com.data.repository.UserRepository
 import com.example.test1.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+data class gpsInfo(
+    val latitude: Double,
+    val longitude: Double
+)
+
 class GalleryActivity : Activity() {
 
     companion object {
         const val EXTRA_CATEGORY = "extra_category"
+        private const val PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 100
     }
     private lateinit var adapter: MenuAdapter
     private val repo = UserRepository()
@@ -38,19 +51,20 @@ class GalleryActivity : Activity() {
         val titleView = findViewById<TextView>(R.id.TitleOnGallery)
         titleView.text = category
 
-//        val inputStream = assets.open("test.json")
-//        val dp = DataParser()
-//        val filtered = dp.parseMenusInSpecificCategory(inputStream, category)
+        requestLocationPermission()
+        val curgps = getLocation()
+        val reqBody = requestMenuListByGpsDto(
+            sort="gps",
+            latitude = curgps.latitude,
+            longitude = curgps.longitude
+        )
 
-        repo.getMenus(category).enqueue(object : Callback<MenuListDto> {
+        repo.getMenusByGPS(category, reqBody).enqueue(object : Callback<MenuListDto> {
             override fun onResponse(call: Call<MenuListDto>, response: Response<MenuListDto>) {
                 if (response.isSuccessful) {
                     val resp = response.body()
-                    Log.d("API", "server response: ${resp}")
-
                     val menus = resp?.data ?: emptyList<Menu>()
                     adapter.setData(menus)
-
                 } else {
                     Log.e("API", "server error: ${response.code()}")
                 }
@@ -59,6 +73,24 @@ class GalleryActivity : Activity() {
                 Log.e("API", "network error", t)
             }
         })
+//        이건 걍 리스트 불러오는거
+//        repo.getMenus(category).enqueue(object : Callback<MenuListDto> {
+//            override fun onResponse(call: Call<MenuListDto>, response: Response<MenuListDto>) {
+//                if (response.isSuccessful) {
+//                    val resp = response.body()
+//                    Log.d("API", "server response: ${resp}")
+//
+//                    val menus = resp?.data ?: emptyList<Menu>()
+//                    adapter.setData(menus)
+//
+//                } else {
+//                    Log.e("API", "server error: ${response.code()}")
+//                }
+//            }
+//            override fun onFailure(call: Call<MenuListDto>, t: Throwable) {
+//                Log.e("API", "network error", t)
+//            }
+//        })
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.GalleryList)
@@ -71,6 +103,68 @@ class GalleryActivity : Activity() {
         }
 
         recyclerView.adapter = adapter
+    }
+    private fun requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // 권한이 없을 경우, 사용자에게 요청
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSION_REQUEST_ACCESS_FINE_LOCATION
+            )
+        } else {
+            // 권한이 이미 있을 경우, 위치 정보를 사용할 수 있음
+            getLocation()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSION_REQUEST_ACCESS_FINE_LOCATION -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // 권한이 부여되면 위치 정보를 사용할 수 있음
+                    getLocation()
+                } else {
+                    // 권한이 거부되면, 기능 사용 불가
+                    Log.d("GPS Service", "GPS denied")
+                }
+                return
+            }
+        }
+    }
+    private fun getLocation():gpsInfo {
+        val manager = getSystemService(LOCATION_SERVICE) as LocationManager
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            val location: Location? = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            location?.let {
+                val latitude = location.latitude
+                val longitude = location.longitude
+                val accuracy = location.accuracy
+                val time = location.time
+                Log.d("map_test", "$latitude, $longitude, $accuracy, $time")
+                return gpsInfo(
+                    latitude = latitude,
+                    longitude = longitude
+                )
+            }
+        }
+        return gpsInfo(
+            latitude = 0.0,
+            longitude = 0.0
+        )
     }
 }
 
@@ -110,7 +204,6 @@ class MenuAdapter(
             .inflate(R.layout.item_image, parent, false)
         return MenuViewHolder(v)
     }
-
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         holder.bind(filteredMenus[position])
