@@ -67,6 +67,8 @@ class DataParser {
                             category = obj.getString("category"),
                             store = obj.getString("store"),
                             isFavorite = obj.getBoolean("isFavorite"),
+                            starpoint = obj.getDouble("starpoint").toFloat(),
+                            deeplink = obj.getString("deeplink"),
                         ))
                     }
                 }
