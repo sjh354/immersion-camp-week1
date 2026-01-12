@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.data.remote.dto.FavoriteRequestDto
+import com.data.remote.dto.FavoriteResponseDto
 import com.data.remote.dto.Menu
+import com.data.repository.UserRepository
 import com.example.test1.R
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class InfoActivity : Activity() {
@@ -22,14 +29,15 @@ class InfoActivity : Activity() {
         const val EXTRA_MENU = "extra_menu"
     }
     private lateinit var adapter: InfoAdapter
+    private val repo = UserRepository()
+
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        var isFavorite = false
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.info)
 
         val menu = intent.getParcelableExtra<Menu>(EXTRA_MENU) ?: return
+
+        var isFavorite = menu.isFavorite
 
         findViewById<TextView>(R.id.TitleOnInfo).text = menu.store
         findViewById<TextView>(R.id.infoName_1).text = menu.name
@@ -66,7 +74,26 @@ class InfoActivity : Activity() {
         imgBtn.setOnClickListener {
             toggleFavoriteAnimated(imgBtn, isFavorite) { newState ->
                 isFavorite = newState
-                // TODO: save to DB / SharedPreferences if needed
+
+                val req = FavoriteRequestDto(
+                    id = menu.id,
+                    changeto = newState
+                )
+
+                repo.setIsFavorite(req).enqueue(object : Callback<FavoriteResponseDto> {
+                    override fun onResponse(
+                        call: Call<FavoriteResponseDto>,
+                        response: Response<FavoriteResponseDto>
+                    ) {
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            Log.d("TETETSTESTSETESTSET", result.toString())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<FavoriteResponseDto>, t: Throwable) {}
+                })
+
             }
         }
     }
