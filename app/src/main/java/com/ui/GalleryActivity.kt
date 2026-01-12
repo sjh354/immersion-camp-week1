@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Spinner
@@ -241,7 +242,7 @@ class MenuAdapter(
 
     class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val iv = itemView.findViewById<ImageView>(R.id.ivPhoto);
-
+        private val screen = itemView.findViewById<FrameLayout>(R.id.screen)
         private val tv = itemView.findViewById<TextView>(R.id.tvPrice)
 
         fun bind(item: Menu) {
@@ -252,6 +253,12 @@ class MenuAdapter(
 
             tv.text = item.price.toString()   // or "₩${item.price}"
             tv.visibility = View.VISIBLE
+            if(item.isFavorite) {
+                screen.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.color_1))
+            }
+            else{
+                screen.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
+            }
         }
     }
 
