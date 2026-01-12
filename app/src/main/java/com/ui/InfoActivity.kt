@@ -49,18 +49,7 @@ class InfoActivity : Activity() {
         }
 
         findViewById<Button>(R.id.button3).setOnClickListener {
-//            val intent = packageManager.getLaunchIntentForPackage("com.fineapp.yogiyo")
-//            if (intent != null) {
-//                startActivity(intent)  // 요기요 앱 실행
-//            } else {
-//                // 설치 안 돼 있으면 Play 스토어로 이동
-//                val playIntent = Intent(
-//                    Intent.ACTION_VIEW,
-//                    Uri.parse("https://play.google.com/store/apps/details?id=com.fineapp.yogiyo")
-//                )
-//                startActivity(playIntent)
-//            }
-            val url = "https://yogiyo.onelink.me/BlI7?pid=kakaochat&af_web_dp=https%3A%2F%2Fwww.yogiyo.co.kr%2F&af_click_lookback=1d&is_retargeting=true&c=mkt_cp&af_adset=2408_kakaochat_menu2&af_ad=chicken08&af_sub1=sns&deep_link_value=yogiyolink%3A%2F%2Fmove.page%2Fglobal_home%2Fdelivery_home%3Fcategory%3Dchicken%26has_discount%3Dtrue&af_dp=yogiyolink%3A%2F%2Fmove.page%2Fglobal_home"
+            val url = "https://yogiyo.onelink.me/BlI7/8rs3fvnu"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }
