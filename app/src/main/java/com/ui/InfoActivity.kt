@@ -93,7 +93,6 @@ class InfoActivity : Activity() {
 
                     override fun onFailure(call: Call<FavoriteResponseDto>, t: Throwable) {}
                 })
-
             }
         }
     }
