@@ -47,13 +47,13 @@ class GalleryActivity : Activity() {
     }
     private lateinit var adapter: MenuAdapter
     private val repo = UserRepository()
+    private var saved_category = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery)
         val category = intent.getStringExtra(EXTRA_CATEGORY) ?: return
-
-
+        saved_category = category
         val titleView = findViewById<TextView>(R.id.TitleOnGallery)
         titleView.text = category
 
@@ -132,6 +132,14 @@ class GalleryActivity : Activity() {
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        val titleView = findViewById<TextView>(R.id.TitleOnGallery)
+        val category = titleView.text ?: return
+        callMenuListAPI(category.toString(), "price_asc")
+    }
+
     private fun callMenuListAPI(category: String, pivot: String) {
         var reqBody = requestMenuListBySortingDto(
             sort=pivot,

@@ -55,7 +55,6 @@ class InfoActivity : Activity() {
         }
 
         findViewById<Button>(R.id.button2).setOnClickListener {
-            // 예: 검색(메인)으로 이동하고 싶으면
              startActivity(Intent(this, MainActivity::class.java))
              finish()
         }
@@ -88,6 +87,7 @@ class InfoActivity : Activity() {
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.d("TETETSTESTSETESTSET", result.toString())
+                            menu.isFavorite = newState
                         }
                     }
 

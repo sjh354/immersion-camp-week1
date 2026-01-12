@@ -11,7 +11,7 @@ data class Menu(
     val img: String,
     val category: String,
     val store: String,
-    val isFavorite: Boolean,
+    var isFavorite: Boolean,
     val starpoint: Float,
     val deeplink: String
 ):Parcelable
