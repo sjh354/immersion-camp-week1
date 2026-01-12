@@ -12,8 +12,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -112,6 +116,39 @@ class GalleryActivity : Activity() {
 
 
         recyclerView.adapter = adapter
+
+
+        val spinner = findViewById<Spinner>(R.id.Spinner)
+        val button = findViewById<ImageButton>(R.id.SpinnerButton)
+
+        val items = listOf("All", "Price ↑", "Price ↓")
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            items
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        button.setOnClickListener {
+            spinner.performClick()
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                // 이곳에 정렬 함수 실행
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+
     }
     private fun requestLocationPermission() {
         if (ContextCompat.checkSelfPermission(
