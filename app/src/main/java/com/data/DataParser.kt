@@ -61,6 +61,7 @@ class DataParser {
                 if (obj.has("category")) {
                     if (obj.getString("category") == category) {
                         ret.add(Menu(
+                            id = obj.getInt("id"),
                             name = obj.getString("name"),
                             price = obj.getString("price"),
                             img = obj.getString("img"),

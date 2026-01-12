@@ -1,6 +1,8 @@
 package com.data.remote
 
 import com.data.remote.dto.CategoryListDto
+import com.data.remote.dto.FavoriteRequestDto
+import com.data.remote.dto.FavoriteResponseDto
 import com.data.remote.dto.MenuListDto
 import com.data.remote.dto.requestMenuListBySortingDto
 import retrofit2.http.GET
@@ -24,4 +26,9 @@ interface ApiService {
         @Path("category") category: String,
         @Body body: requestMenuListBySortingDto
     ): Call<MenuListDto>
+
+    @POST("api/menus/favorite")
+    fun setIsFavorite(
+        @Body body: FavoriteRequestDto
+    ): Call<FavoriteResponseDto>
 }
