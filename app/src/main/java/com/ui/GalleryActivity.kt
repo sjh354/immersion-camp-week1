@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -101,6 +102,14 @@ class GalleryActivity : Activity() {
             intent.putExtra(InfoActivity.Companion.EXTRA_MENU, menu)
             startActivity(intent)
         }
+
+        val btnNext = findViewById<Button>(R.id.BackToSearch)
+
+        btnNext.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
 
         recyclerView.adapter = adapter
     }
