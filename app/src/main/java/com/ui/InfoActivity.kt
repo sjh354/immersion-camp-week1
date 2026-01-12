@@ -23,6 +23,9 @@ class InfoActivity : Activity() {
     }
     private lateinit var adapter: InfoAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        var isFavorite = false
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.info)
 
@@ -33,6 +36,7 @@ class InfoActivity : Activity() {
         findViewById<TextView>(R.id.InfoTitle_1).text = menu.price
 
         val imgView = findViewById<ImageView>(R.id.imgOnInfo)
+        val imgBtn = findViewById<ImageView>(R.id.SetFavorite)
         Glide.with(this)
             .load(menu.img)
             .centerCrop()
@@ -53,7 +57,45 @@ class InfoActivity : Activity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }
+
+        imgBtn.setImageResource(if (menu.isFavorite)
+            R.drawable.ic_favorite_on
+        else
+            R.drawable.ic_favorite_off)
+
+        imgBtn.setOnClickListener {
+            toggleFavoriteAnimated(imgBtn, isFavorite) { newState ->
+                isFavorite = newState
+                // TODO: save to DB / SharedPreferences if needed
+            }
+        }
     }
+
+    fun toggleFavoriteAnimated(
+        button: ImageView,
+        isFavorite: Boolean,
+        onChanged: (Boolean) -> Unit
+    ) {
+        val newState = !isFavorite
+
+        button.animate()
+            .scaleX(1.2f)
+            .scaleY(1.2f)
+            .setDuration(100)
+            .withEndAction {
+                button.animate().scaleX(1f).scaleY(1f).duration = 100
+            }
+
+        button.setImageResource(
+            if (newState)
+                R.drawable.ic_favorite_on
+            else
+                R.drawable.ic_favorite_off
+        )
+
+        onChanged(newState)
+    }
+
 }
 
 class InfoAdapter(
