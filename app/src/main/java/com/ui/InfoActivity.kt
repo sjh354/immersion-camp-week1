@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.data.remote.dto.Menu
 import com.example.test1.R
-import android.widget.Button
 
 
 class InfoActivity : Activity() {
@@ -29,8 +29,8 @@ class InfoActivity : Activity() {
         val menu = intent.getParcelableExtra<Menu>(EXTRA_MENU) ?: return
 
         findViewById<TextView>(R.id.TitleOnInfo).text = menu.store
-        findViewById<TextView>(R.id.InfoTitle_1).text = menu.name
-        findViewById<TextView>(R.id.infoTitle_2).text = menu.price
+        findViewById<TextView>(R.id.infoName_1).text = menu.name
+        findViewById<TextView>(R.id.InfoTitle_1).text = menu.price
 
         val imgView = findViewById<ImageView>(R.id.imgOnInfo)
         Glide.with(this)

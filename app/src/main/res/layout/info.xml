@@ -4,49 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    android:background="@mipmap/ic_launcher_background"
     android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/SetFavorite"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="25dp"
+            android:elevation="15dp"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <TextView
+            android:id="@+id/TitleOnInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="12dp"
+            android:text="쩌는 식당"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+    </FrameLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="8">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/TitleOnInfo"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="쩌는 식당"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textSize="24sp" />
-
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/SetFavorite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    app:srcCompat="@android:drawable/btn_star" />
+                android:layout_height="match_parent"
+                android:padding="24dp">
 
                 <ImageView
                     android:id="@+id/imgOnInfo"
                     android:layout_width="match_parent"
                     android:layout_height="500dp"
+                    android:elevation="10dp"
                     tools:src="@tools:sample/avatars" />
             </FrameLayout>
 
             <TableLayout
                 android:id="@+id/Info"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="24dp">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -55,18 +68,49 @@
                     android:layout_marginEnd="25dp">
 
                     <TextView
-                        android:id="@+id/InfoTitle_1"
-                        android:layout_width="170dp"
+                        android:id="@+id/infoTitle_2"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:text="Name"
                         android:textSize="24dp" />
 
                     <TextView
-                        android:id="@+id/infoTitle_2"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:text="asdf"
+                        android:id="@+id/infoName_"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Price"
                         android:textAlignment="textEnd"
+                        android:textSize="24dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp">
+
+                    <TextView
+                        android:id="@+id/infoName_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="serif"
+                        android:text="밥"
+                        android:textColor="@color/color_4"
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/InfoTitle_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="serif"
+                        android:text="20억"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/color_4"
                         android:textSize="24dp" />
 
                 </TableRow>
@@ -74,26 +118,50 @@
             </TableLayout>
 
             <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:onClick="BackToSearch"
-                android:text="Gallery" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:onClick="BackToGallery"
-                android:text="Search" />
-
-            <Button
                 android:id="@+id/button3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:padding="24dp"
                 android:text="요기요 바로가기" />
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/white"
+            android:onClick="BackToSearch"
+            android:text="마저보기"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/color_4"
+            android:onClick="BackToGallery"
+            android:text="처음으로"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </LinearLayout>
