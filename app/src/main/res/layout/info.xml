@@ -73,9 +73,12 @@
 
                     <RatingBar
                         android:id="@+id/ratingBar"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:indeterminate="false"
+                        android:isIndicator="true"
                         android:max="5"
                         android:progressBackgroundTint="@color/white"
                         android:progressTint="@color/color_4"
@@ -93,7 +96,8 @@
                         android:maxLines="1"
                         android:text="Price"
                         android:textAlignment="center"
-                        android:textSize="20sp" />
+                        android:textColor="@color/color_4"
+                        android:textSize="24sp" />
                 </TableRow>
 
                 <TableRow
