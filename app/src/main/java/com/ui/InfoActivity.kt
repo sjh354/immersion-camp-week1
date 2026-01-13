@@ -55,7 +55,6 @@ class InfoActivity : Activity() {
                 } else {
                     R.drawable.no_image
                 })
-            .centerCrop()
             .into(imgView)
 
         findViewById<Button>(R.id.button).setOnClickListener {
