@@ -40,6 +40,9 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/jua"
 
+                android:maxLines="1"
+                android:ellipsize="end"
+
                 android:text="TextView"
                 android:textColor="#35ABFF" />
 
