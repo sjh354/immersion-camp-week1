@@ -105,7 +105,7 @@ class GalleryActivity : Activity() {
         button.setOnClickListener {
             spinner.performClick()
         }
-        val spinner_adapter = CustomSpinnerAdapter(this, listOf("가격 오름차순", "가격 내림차순", "거리 가까운순"))
+        val spinner_adapter = CustomSpinnerAdapter(this, listOf("별점순", "가격 오름차순", "가격 내림차순", "거리 가까운순"))
         spinner.adapter = spinner_adapter
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -120,6 +120,7 @@ class GalleryActivity : Activity() {
 
                 val selectedItem = parent.getItemAtPosition(position) as String
                 when (selectedItem) {
+                    "별점순" -> callMenuListAPI(category, "starpoint_desc")
                     "가격 오름차순" -> callMenuListAPI(category, "price_asc")
                     "가격 내림차순" -> callMenuListAPI(category, "price_desc")
                     "거리 가까운순" -> callMenuListAPI(category, "gps")
