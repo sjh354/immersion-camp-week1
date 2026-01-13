@@ -10,3 +10,6 @@ data class FavoriteResponseDto(
     val id: Int,
     val isFavorite: Boolean
 )
+
+data class FavoritesRes(val favorites: List<Int>)
+

@@ -22,7 +22,7 @@ import retrofit2.Response
 
 class MainActivity : Activity() {
     private lateinit var adapter: CategoryAdapter
-    private val repo = UserRepository()
+    private val repo = UserRepository(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

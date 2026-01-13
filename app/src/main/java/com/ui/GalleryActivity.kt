@@ -47,7 +47,7 @@ class GalleryActivity : Activity() {
         private const val PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 100
     }
     private lateinit var adapter: MenuAdapter
-    private val repo = UserRepository()
+    private val repo = UserRepository(this)
     private var saved_category = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -257,7 +257,12 @@ class MenuAdapter(
 
         fun bind(item: Menu) {
             Glide.with(itemView)
-                .load(item.img)
+                .load(
+                if (item.img != "no-image") {
+                    item.img
+                } else {
+                    "https://w7.pngwing.com/pngs/395/283/png-transparent-empty-set-null-set-null-sign-mathematics-mathematics-angle-logo-number-thumbnail.png"
+                })
                 .centerCrop()
                 .into(iv)
 

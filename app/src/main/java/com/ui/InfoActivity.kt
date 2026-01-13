@@ -30,7 +30,7 @@ class InfoActivity : Activity() {
         const val EXTRA_MENU = "extra_menu"
     }
     private lateinit var adapter: InfoAdapter
-    private val repo = UserRepository()
+    private val repo = UserRepository(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,12 @@ class InfoActivity : Activity() {
         val imgView = findViewById<ImageView>(R.id.imgOnInfo)
         val imgBtn = findViewById<ImageView>(R.id.SetFavorite)
         Glide.with(this)
-            .load(menu.img)
+            .load(
+                if (menu.img != "no-image") {
+                    menu.img
+                } else {
+                    "https://w7.pngwing.com/pngs/395/283/png-transparent-empty-set-null-set-null-sign-mathematics-mathematics-angle-logo-number-thumbnail.png"
+                })
             .centerCrop()
             .into(imgView)
 

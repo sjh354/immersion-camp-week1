@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.androidx.gridlayout)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.recyclerview)
+    implementation("com.google.android.material:material:1.12.0")
+
     implementation("androidx.gridlayout:gridlayout:1.1.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
 // For loading and tinting drawables on older versions of the platform
@@ -68,6 +70,14 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    // google auth
+    implementation("androidx.credentials:credentials:1.5.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.5.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+
+    implementation(libs.androidx.credentials)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

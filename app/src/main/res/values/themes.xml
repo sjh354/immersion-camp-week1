@@ -2,4 +2,7 @@
 <resources>
 
     <style name="Theme.Test1" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Auth" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- 필요하면 로그인 화면용 색상/스타일만 여기서 커스터마이즈 -->
+    </style>
 </resources>
