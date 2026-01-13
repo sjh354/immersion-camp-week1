@@ -44,6 +44,7 @@ class InfoActivity : Activity() {
         findViewById<TextView>(R.id.infoName_1).text = menu.name
         findViewById<TextView>(R.id.InfoTitle_1).text = menu.price
         findViewById<RatingBar>(R.id.ratingBar).rating = menu.starpoint
+        findViewById<TextView>(R.id.StarPoint).text = menu.starpoint.toString()
 
         val imgView = findViewById<ImageView>(R.id.imgOnInfo)
         val imgBtn = findViewById<ImageView>(R.id.SetFavorite)
@@ -52,7 +53,7 @@ class InfoActivity : Activity() {
                 if (menu.img != "no-image") {
                     menu.img
                 } else {
-                    "https://w7.pngwing.com/pngs/395/283/png-transparent-empty-set-null-set-null-sign-mathematics-mathematics-angle-logo-number-thumbnail.png"
+                    R.drawable.no_image
                 })
             .centerCrop()
             .into(imgView)
