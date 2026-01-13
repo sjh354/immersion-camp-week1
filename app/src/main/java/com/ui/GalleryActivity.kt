@@ -261,7 +261,7 @@ class MenuAdapter(
                 if (item.img != "no-image") {
                     item.img
                 } else {
-                    "https://w7.pngwing.com/pngs/395/283/png-transparent-empty-set-null-set-null-sign-mathematics-mathematics-angle-logo-number-thumbnail.png"
+                    R.drawable.no_image
                 })
                 .centerCrop()
                 .into(iv)
