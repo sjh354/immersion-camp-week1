@@ -99,8 +99,8 @@ class CategoryAdapter(
         val category = filteredCategories[position]
         holder.textView.text = category
 
-        val typeface = Typeface.createFromAsset(holder.itemView.context.assets, "font/jua_regular.ttf")
-        holder.textView.typeface = typeface
+//        val typeface = Typeface.createFromAsset(holder.itemView.context.assets, "@font/jua_regular.ttf")
+//        holder.textView.typeface = typeface
         holder.itemView.setOnClickListener { onItemClick(category) }
     }
 

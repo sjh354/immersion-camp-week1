@@ -30,33 +30,21 @@ class AuthActivity : ComponentActivity() {
 
     // 서버 검증용 Web Client ID (Google Cloud Console에서 만든 Web OAuth Client ID)
 //    private val webClientId = "1038876443378-2ujktdvpg88aep51kkq55mpcpiq5gfog.apps.googleusercontent.com"
-    private val webClientId = "581842099820-juajrh3q9vinkhgb6vrbd0r777idset6.apps.googleusercontent.com"
+    private val webClientId = "1038876443378-f22m09vmivhhmphqiqqee9v0d1lp1qth.apps.googleusercontent.com"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.login)
-        val loginBtn = findViewById<Button>(R.id.loginBtn)
-        loginBtn.setOnClickListener {
-            startSignIn(onlyAuthorized = true)
-            Log.d("TESTESTETSETESTEST", "sign in btn pushed")
-        }
-
-
-
         credentialManager = CredentialManager.create(this)
 
-
-        // (1) 이미 서버 토큰이 있으면 메인으로
         val savedAppToken = getSharedPreferences("auth", MODE_PRIVATE).getString("app_token", null)
 
+        // (1) 이미 서버 토큰이 있으면 메인으로
         if (!savedAppToken.isNullOrBlank()) {
             goMain()
             return
         }
-
-        // (2) 없으면 즉시 구글 로그인 시작
-        startSignIn(onlyAuthorized = true)
+        startSignIn(onlyAuthorized = true) // (2) 없으면 즉시 구글 로그인 시작
     }
 
     private fun openAddGoogleAccount() {
@@ -73,7 +61,6 @@ class AuthActivity : ComponentActivity() {
             .setAutoSelectEnabled(false)           // ✅ 자동선택 끔(chooser 강제):"
             .build()
 
-
         val request = GetCredentialRequest.Builder()
             .addCredentialOption(googleIdOption)
             .build()
@@ -88,20 +75,20 @@ class AuthActivity : ComponentActivity() {
                 loginToBackend(idToken)
 
             } catch (e: androidx.credentials.exceptions.NoCredentialException) {
-                Log.e("AUTH", "getCredential failed: ${e::class.java.name} / ${e.message}", e)
-                openAddGoogleAccount()
+                Log.e("AUTH", "getCredential failed 111: ${e::class.java.name} / ${e.message}", e)
+
                 if (onlyAuthorized) {
                     startSignIn(onlyAuthorized = false) // 🔥 자동 로그인 실패 → 전체 계정 선택 UI 띄우기
                 } else {
+//                    openAddGoogleAccount()
                     finish()
                 }
             } catch (e: Exception) {
-                Log.e("AUTH", "getCredential failed: ${e::class.java.name} / ${e.message}", e)
+                Log.e("AUTH", "getCredential failed 222: ${e::class.java.name} / ${e.message}", e)
                 finish()
             }
         }
     }
-
 
     private fun loginToBackend(googleIdToken: String) {
         // Retrofit enqueue로 Flask에 전송 → 서버가 검증 후 app_token 내려줌
@@ -115,9 +102,7 @@ class AuthActivity : ComponentActivity() {
                     val appToken = response.body()!!.app_token
                     AuthStore.setToken(this@AuthActivity, appToken)
                     goMain()
-
                 }
-
                 override fun onFailure(call: retrofit2.Call<AuthGoogleRes>, t: Throwable) {}
             })
     }
