@@ -55,6 +55,7 @@
                 android:progressBackgroundTint="@color/white"
                 android:progressTint="@color/color_4"
                 android:rating="1"
+                android:secondaryProgressTint="@color/color_4"
                 android:stepSize="0.1" />
 
         </LinearLayout>
