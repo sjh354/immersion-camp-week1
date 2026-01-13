@@ -262,7 +262,6 @@ class MenuAdapter(
                 } else {
                     R.drawable.no_image
                 })
-                .centerCrop()
                 .into(iv)
 
             tv.text = item.price.toString()   // or "₩${item.price}"
