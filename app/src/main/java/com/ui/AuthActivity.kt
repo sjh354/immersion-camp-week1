@@ -18,6 +18,9 @@ import com.example.test1.R
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import kotlinx.coroutines.launch
+import android.provider.Settings
+
+
 
 class AuthActivity : ComponentActivity() {
 
@@ -26,7 +29,8 @@ class AuthActivity : ComponentActivity() {
     private val repo = UserRepository(this)
 
     // 서버 검증용 Web Client ID (Google Cloud Console에서 만든 Web OAuth Client ID)
-    private val webClientId = "1038876443378-2ujktdvpg88aep51kkq55mpcpiq5gfog.apps.googleusercontent.com"
+//    private val webClientId = "1038876443378-2ujktdvpg88aep51kkq55mpcpiq5gfog.apps.googleusercontent.com"
+    private val webClientId = "581842099820-juajrh3q9vinkhgb6vrbd0r777idset6.apps.googleusercontent.com"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,16 +59,18 @@ class AuthActivity : ComponentActivity() {
         startSignIn(onlyAuthorized = true)
     }
 
-    private fun startSignIn(onlyAuthorized: Boolean) {
-//        val googleIdOption = GetGoogleIdOption.Builder()
-//            .setServerClientId(webClientId)
-//            .setFilterByAuthorizedAccounts(onlyAuthorized)
-//            .build()
+    private fun openAddGoogleAccount() {
+        val intent = Intent(Settings.ACTION_ADD_ACCOUNT).apply {
+            putExtra(Settings.EXTRA_ACCOUNT_TYPES, arrayOf("com.google"))
+        }
+        startActivity(intent)
+    }
 
+    private fun startSignIn(onlyAuthorized: Boolean) {
         val googleIdOption = GetGoogleIdOption.Builder()
             .setServerClientId(webClientId)
-            .setFilterByAuthorizedAccounts(false)  // ✅ 모든 계정
-            .setAutoSelectEnabled(false)           // ✅ 자동선택 끔(chooser 강제)
+            .setFilterByAuthorizedAccounts(onlyAuthorized)
+            .setAutoSelectEnabled(false)           // ✅ 자동선택 끔(chooser 강제):"
             .build()
 
 
@@ -82,18 +88,15 @@ class AuthActivity : ComponentActivity() {
                 loginToBackend(idToken)
 
             } catch (e: androidx.credentials.exceptions.NoCredentialException) {
-
-                Log.d("TETESESTESTESTESTSETES11111", e.toString())
-
+                Log.e("AUTH", "getCredential failed: ${e::class.java.name} / ${e.message}", e)
+                openAddGoogleAccount()
                 if (onlyAuthorized) {
-                    // 🔥 자동 로그인 실패 → 전체 계정 선택 UI 띄우기
-                    startSignIn(onlyAuthorized = false)
+                    startSignIn(onlyAuthorized = false) // 🔥 자동 로그인 실패 → 전체 계정 선택 UI 띄우기
                 } else {
-                    // 유저가 취소하거나 계정 없음
                     finish()
                 }
             } catch (e: Exception) {
-                Log.d("TETESESTESTESTESTS222222", e.toString())
+                Log.e("AUTH", "getCredential failed: ${e::class.java.name} / ${e.message}", e)
                 finish()
             }
         }
