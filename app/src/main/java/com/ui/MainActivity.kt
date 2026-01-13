@@ -2,6 +2,7 @@ package com.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -97,6 +98,9 @@ class CategoryAdapter(
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = filteredCategories[position]
         holder.textView.text = category
+
+        val typeface = Typeface.createFromAsset(holder.itemView.context.assets, "font/jua_regular.ttf")
+        holder.textView.typeface = typeface
         holder.itemView.setOnClickListener { onItemClick(category) }
     }
 
