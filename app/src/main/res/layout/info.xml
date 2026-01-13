@@ -82,6 +82,18 @@
                         android:rating="4.6"
                         android:secondaryProgressTint="@color/color_4"
                         android:stepSize="0.1" />
+
+                    <TextView
+                        android:id="@+id/StarPoint"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/jua"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="Price"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
                 </TableRow>
 
                 <TableRow
