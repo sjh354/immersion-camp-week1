@@ -2,8 +2,10 @@ package com.ui
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -100,38 +102,34 @@ class GalleryActivity : Activity() {
         val spinner = findViewById<Spinner>(R.id.Spinner)
         val button = findViewById<ImageButton>(R.id.SpinnerButton)
 
-        val items = listOf("가격 오름차순", "가격 내림차순", "거리 가까운순")
-
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            items
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-
         button.setOnClickListener {
             spinner.performClick()
         }
+        val spinner_adapter = CustomSpinnerAdapter(this, listOf("가격 오름차순", "가격 내림차순", "거리 가까운순"))
+        spinner.adapter = spinner_adapter
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                // 이곳에 정렬 함수 실행
-                Log.d("TESTESTESTESTESTSETESTSET", position.toString())
-                when (position) {
-                    0 -> callMenuListAPI(category, "price_asc")
-                    1 -> callMenuListAPI(category, "price_desc")
-                    2 -> callMenuListAPI(category, "gps")
+                spinner_adapter.setSelectedPosition(position)
+
+                val selectedItem = parent.getItemAtPosition(position) as String
+                when (selectedItem) {
+                    "가격 오름차순" -> callMenuListAPI(category, "price_asc")
+                    "가격 내림차순" -> callMenuListAPI(category, "price_desc")
+                    "거리 가까운순" -> callMenuListAPI(category, "gps")
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
+
+
     }
 
     override fun onResume() {
@@ -313,4 +311,44 @@ class MenuAdapter(
 
     override fun getItemCount() = filteredMenus.size
 }
+
+class CustomSpinnerAdapter(
+    context: Context,
+    private val items: List<String>
+) : ArrayAdapter<String>(context, 0, items) {
+
+    private var selectedPosition = -1
+
+    fun setSelectedPosition(position: Int) {
+        selectedPosition = position
+        notifyDataSetChanged()
+    }
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val view = convertView ?: LayoutInflater.from(context)
+            .inflate(R.layout.spinner_item, parent, false)
+
+        view.findViewById<TextView>(R.id.tvItem).text = items[position]
+        return view
+    }
+
+    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val view = convertView ?: LayoutInflater.from(context)
+            .inflate(R.layout.spinner_dropdown_item, parent, false)
+
+        val textView = view.findViewById<TextView>(R.id.tvDropdown)
+        textView.text = items[position]
+
+        if (position == selectedPosition) {
+            textView.setBackgroundResource(R.drawable.spinner_selected_bg)
+            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+        } else {
+            textView.setBackgroundColor(Color.TRANSPARENT)
+            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+        }
+
+        return view
+    }
+}
+
 

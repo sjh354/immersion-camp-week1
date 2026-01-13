@@ -28,7 +28,7 @@
 
     <Spinner
         android:id="@+id/Spinner"
-        android:layout_width="49dp"
+        android:layout_width="109dp"
         android:layout_height="49dp"
         android:layout_gravity="right"
         android:background="@drawable/baseline_sort_24"

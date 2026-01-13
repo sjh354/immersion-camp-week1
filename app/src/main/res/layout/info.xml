@@ -82,6 +82,18 @@
                         android:rating="4.6"
                         android:secondaryProgressTint="@color/color_4"
                         android:stepSize="0.1" />
+
+                    <TextView
+                        android:id="@+id/StarPoint"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/jua"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="Price"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
                 </TableRow>
 
                 <TableRow
@@ -180,7 +192,7 @@
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -195,7 +207,7 @@
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
