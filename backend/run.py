@@ -167,6 +167,13 @@ def menus(category):
 
     rows = q.all()
 
+    # If no menus found for the exact category, try matching menus whose name contains the category string
+    if not rows:
+        q_name = Menu.query.filter(Menu.name.ilike(f"%{category}%"))
+        if not includes_no_image:
+            q_name = q_name.filter(Menu.img.isnot(None)).filter(Menu.img != "no-image")
+        rows = q_name.all()
+
     fav_ids = get_favorite_ids(g.google_sub)
 
     req_data = request.get_json(silent=True) or {}

@@ -60,7 +60,15 @@ class MainActivity : Activity() {
         recyclerView.adapter = adapter
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = false
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query.isNullOrBlank()) return false
+                val intent = Intent(this@MainActivity, GalleryActivity::class.java).apply {
+                    putExtra(EXTRA_CATEGORY, query)
+                }
+                startActivity(intent)
+                searchView.clearFocus()
+                return true
+            }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 adapter.filter(newText)
