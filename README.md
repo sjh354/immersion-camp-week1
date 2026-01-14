@@ -4,7 +4,7 @@
   <img src="https://github.com/user-attachments/assets/e4ab2d6e-b665-4f67-b2c2-a396a6e8682e" alt="어디 배너" width="500" height="500" />
 </p>
 
-`어디`는 사용자가 메뉴(예: 치킨, 피자, 떡볶이)을 입력해 해당 메뉴를 제공하는 배달 음식점을 검색하고, 정렬·필터·상세 정보를 확인할 수 있는 Android 앱입니다. 이 README는 개발자를 위한 설정·빌드·구성 안내서입니다.
+`어디`는 사용자가 메뉴(예: 치킨, 피자, 떡볶이)을 입력해 해당 메뉴를 제공하는 배달 음식점을 검색하고, 정렬·필터·상세 정보를 확인할 수 있는 Android 앱입니다.
 
 <p align="right">
   <img src="https://github.com/user-attachments/assets/8a2b07ca-7306-4f0c-9a6d-900b9d2c59d5" alt="어디 로고" width="160" height="160" />
@@ -103,14 +103,43 @@
 
 ## 자주 묻는 질문
 
-- Q: BASE_URL을 어디서 바꾸나요?
-  - A: `app/src/main/java/com/data/remote/RetrofitClient.kt`에서 수정하세요.
-- Q: Google 인증 Web client ID는 어디에 넣나요?
-  - A: `app/src/main/java/com/ui/AuthActivity.kt`에서 설정합니다.
+- A: `app/src/main/java/com/data/remote/RetrofitClient.kt`에서 수정하세요.
+- A: `app/src/main/java/com/ui/AuthActivity.kt`에서 설정합니다.
 
 ## 참고 파일
 
-- 매니페스트: `app/src/main/AndroidManifest.xml`
-- 주요 레포지토리: `app/src/main/java/com/data/repository/UserRepository.kt`
-- OpenAPI 명세: [api/openapi.yaml](api/openapi.yaml)
+## 백엔드 (간단한 개발 서버)
+
+- 위치: `backend/` (예: `backend/app.py`, `backend/data.py`, `backend/requirements.txt`)
+- 목적: 로컬 개발 및 API 시뮬레이션용 간단한 Flask 서버
+
+간단한 엔드포인트 요약 (코드/`api/openapi.yaml`와 일치함):
+
+- `POST /api/auth/google` — Google ID 토큰을 받아 앱용 `app_token` 발급
+- `GET /api/categories` — 카테고리 목록 반환 (헤더: `Authorization: Bearer <APP_TOKEN>`)
+- `GET /api/menus/{category}` — 특정 카테고리의 메뉴 목록 반환
+- `POST /api/menus/{category}` — 정렬/위치 정보(`{sort, latitude, longitude}`)를 받아 정렬된 메뉴 목록 반환
+- `POST /api/menus/favorite` — `{id, changeto}`로 즐겨찾기 토글
+- `GET /api/menus/favorites` — 사용자 즐겨찾기 ID 목록 반환
+
+로컬 실행 예시:
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
+
+접속 정보 안내:
+
+- 에뮬레이터에서 접근: `http://10.0.2.2:5000` (에뮬레이터 → 호스트 로컬)
+- 물리 디바이스: 개발 머신의 로컬 IP (`http://192.168.x.y:5000`) — 동일 네트워크 필요
+- Android 앱의 `RetrofitClient.kt`에서 `BASE_URL`을 위 주소로 설정해야 앱에서 로컬 서버를 호출할 수 있습니다.
+
+버전 관리 팁:
+
+- `backend/`에 가상환경 디렉터리, 로그, 데이터베이스 파일 등이 포함되지 않도록 루트 `.gitignore` 또는 `backend/.gitignore`에 관련 항목을 추가하세요.
+
 - APK 파일 다운받기: [다운받기](app/release/app-release.apk)

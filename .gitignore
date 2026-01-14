@@ -14,3 +14,21 @@
 .cxx
 local.properties
 buildKEY.jks
+
+# Backend 관련 무시 패턴 (로컬 개발용)
+ /backend/.venv/
+ /backend/venv/
+ /backend/.venv-backend/
+ /backend/*.pyc
+ /backend/__pycache__/
+ /backend/.pytest_cache/
+ /backend/.env
+ /backend/instance/
+ /backend/*.sqlite3
+ /backend/*.db
+ /backend/*.egg-info/
+ /backend/dist/
+ /backend/build/
+ /backend/.mypy_cache/
+ /backend/.vscode/
+ /backend/*.log
