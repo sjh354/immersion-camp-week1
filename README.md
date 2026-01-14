@@ -113,3 +113,4 @@
 - 매니페스트: `app/src/main/AndroidManifest.xml`
 - 주요 레포지토리: `app/src/main/java/com/data/repository/UserRepository.kt`
 - OpenAPI 명세: [api/openapi.yaml](api/openapi.yaml)
+- APK 파일 다운받기: [다운받기](app/release/app-release.apk)
