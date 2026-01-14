@@ -1,7 +1,7 @@
 # 어디 — 메뉴 기반 배달 검색 앱
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e4ab2d6e-b665-4f67-b2c2-a396a6e8682e" alt="어디 배너" width="900" height="220" />
+  <img src="https://github.com/user-attachments/assets/e4ab2d6e-b665-4f67-b2c2-a396a6e8682e" alt="어디 배너" width="500" height="500" />
 </p>
 
 `어디`는 사용자가 메뉴(예: 치킨, 피자, 떡볶이)을 입력해 해당 메뉴를 제공하는 배달 음식점을 검색하고, 정렬·필터·상세 정보를 확인할 수 있는 Android 앱입니다. 이 README는 개발자를 위한 설정·빌드·구성 안내서입니다.
@@ -112,3 +112,4 @@
 
 - 매니페스트: `app/src/main/AndroidManifest.xml`
 - 주요 레포지토리: `app/src/main/java/com/data/repository/UserRepository.kt`
+- OpenAPI 명세: [api/openapi.yaml](api/openapi.yaml)
