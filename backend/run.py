@@ -11,8 +11,8 @@ from models import db, User, Menu, Favorite
 
 app = Flask(__name__)
 
-GOOGLE_WEB_CLIENT_ID = "1038876443378-f22m09vmivhhmphqiqqee9v0d1lp1qth.apps.googleusercontent.com"
-APP_JWT_SECRET = "BiwqNhYJCoILMEEbfrExtgENZlUwgXwVQrZDzoPbL8eWNDqahAJwaQ6iN4Q3Zqkk"
+GOOGLE_WEB_CLIENT_ID = "~~~"
+APP_JWT_SECRET = "~~~"
 APP_JWT_EXP_SEC = 60 * 60 * 24 * 7
 
 # ✅ 환경변수로 바꾸고 싶으면 여기만 수정
